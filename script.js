@@ -56,7 +56,7 @@ class Calculator {
                 break;
         }
     
-        const currentExpression = `${this.$previousPreview.textContent} ${this.previousOperation} ${this.$currentPreview.textContent}`;
+        const currentExpression = `${this.$previousPreview.textContent}  ${this.$currentPreview.textContent}`;
         this.$currentPreview.textContent = result.toString();
         this.$previousPreview.textContent = "";
     
