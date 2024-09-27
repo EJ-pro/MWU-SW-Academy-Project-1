@@ -1,135 +1,159 @@
 html {
-    background: rgb(179, 155, 254);
-    background: linear-gradient(150deg, rgba(179, 155, 254, 1) 0%, rgba(140, 0, 161, 1) 100%);
-  
-  }
-  
-  html,
-  body {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  
-  }
-  
-  * {
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .container {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-  
-  
-  
+  background: rgb(57, 0, 228);
+  background: linear-gradient(150deg, rgb(7, 255, 172) 0%, rgb(221, 0, 255) 100%);
+
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  display: flex; /* 계산기와 기록을 나란히 배치 */
+  justify-content: space-between; /* 간격을 균등하게 */
+  width: 90%;
+  max-width: 800px; /* 최대 너비 조정 */
+  margin: 0 auto; /* 중앙 정렬 */
+}
+
+.cal {
+  flex: 7; /* 계산기 영역에 70% 비율 할당 */
+}
+
+.history {
+  flex: 3; /* 계산 기록 영역에 30% 비율 할당 */
+  background-color: #f0f0f0; /* 부드러운 배경색 */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.history h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.history-list {
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  padding: 0;
+  max-height: 300px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+.history-list li {
+  padding: 5px;
+  border-bottom: 1px solid #ddd; /* 구분선 추가 */
+}
+
+.cal-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  background-color: #1e1e2f; /* 어두운 배경 */
+  color: #fff;
+  border-bottom: 4px solid #00bcd4; /* 아래 경계선 추가 */
+}
+
+.cal-body {
+  background-color: #f5f5f5; /* 부드러운 배경색 */
+  padding: 10px;
+}
+
+.cal-space {
+  display: flex;
+  width: 100%;
+  margin-top: 8px; /* 버튼 간격 증가 */
+}
+
+.cal-space > button {
+  flex: 1; /* 버튼의 크기를 균등하게 */
+  height: 70px;
+  padding: 10px; /* 패딩 추가 */
+  border: none;
+  border-radius: 12px; /* 둥근 모서리 */
+  background-color: #e0e0e0; /* 부드러운 회색 배경 */
+  color: #333; /* 글자 색상 */
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  transition: background-color 0.3s, transform 0.1s; /* 부드러운 전환 효과 */
+}
+
+.cal-space > button:hover {
+  background-color: #d5d5d5; /* 호버 시 색상 변화 */
+  transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+}
+
+.cal-space > button:active {
+  transform: translateY(1px); /* 클릭 시 약간 아래로 이동하는 효과 */
+}
+
+.cal-space .space-2 {
+  flex: 2; /* 두 배 크기로 설정 */
+}
+
+@media (max-width: 600px) {
   .wrapper {
-    /* width: 90%;
-    max-width: 500px;
-    margin: 0 auto; */
-  }
-  
-  .cal {}
-  
-  .cal .cal-header {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 20px;
-    height: 60px;
-    word-break: break-all;
-  }
-  
-  .cal-header {
-    text-align: right;
-    background-color: rgba(0, 0, 0, .62);
-    color: white;
-  }
-  
-  .cal-body {
-    margin-top: -4px;
-    background-color: white;
-  }
-  
-  .cal-header .cal-previous-preview {
-    opacity: .7;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  .cal-header .cal-current-preview {
-    font-size: 25px;
-  }
-  
-  .cal .cal-body .cal-space {
-    width: 100%;
-    display: flex;
-  }
-  
-  .cal-space {
-    display: flex;
-    width: 100%;
-    flex: 4;
-    flex-shrink: 0;
-    gap: 4px;
-    margin-top: 4px
-  }
-  
-  .cal-space>button {
-    width: 100%;
-    display: flex;
-    flex: 1 calc(25% - 4px);
-    border: none;
-    width: 80px;
-    height: 80px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background-color: rgb(250 241 255);
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .cal-space .space-2 {
-    flex: 2 calc(50% - 4px);
-  }
-  
-  @media (min-width: 601px) {
-    .cal-space>button:hover {
-      background-color: white;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .wrapper {
       width: 100%;
       height: 100%;
-      max-width: 100%;
-    }
-  
-    .cal {
-      height: 100%;
-    }
-  
-    .cal .cal-header {
-      height: 20%;
-      padding: 10px;
-    }
-  
-    .cal .cal-body {
-      height: calc(100% - 20% - 10px + 4px);
+  }
+
+  .cal .cal-header {
+      padding: 15px;
+  }
+
+  .cal .cal-body {
       display: flex;
-      flex-flow: column;
-    }
-  
-    .cal .cal-space>button {
-      width: auto;
-      height: auto;
-    }
-  } 
+      flex-direction: column;
+  }
+}
+.wrapper {
+  display: flex; /* 계산기와 기록을 나란히 배치 */
+  gap: 20px; /* 간격 추가 */
+}
+
+.history {
+  width: 100%; /* 계산 기록 영역 너비 설정 */
+  background-color: #f0f0f0; /* 부드러운 배경색 */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.history h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.history-list {
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  padding: 0;
+  max-height: 300px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+.history-list li {
+  padding: 5px;
+  border-bottom: 1px solid #ddd; /* 구분선 추가 */
+}

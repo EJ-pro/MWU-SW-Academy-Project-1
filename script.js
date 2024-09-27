@@ -10,18 +10,18 @@ class Calculator {
     }
 
     onPressNumber(number) {
-       // 소수점 입력시 현재 입력 받은 데이터가 없는 경우
-       if (number === "." && this.$currentPreview.textContent.length < 1) {
-         return 
-       }
+        // 소수점 입력시 현재 입력 받은 데이터가 없는 경우
+        if (number === "." && this.$currentPreview.textContent.length < 1) {
+            return
+        }
 
-       this.$currentPreview.textContent += number
+        this.$currentPreview.textContent += number
     }
 
     onPressOperation(operation) {
         // 연산기호 입력시 현재 입력 받은 데이터가 없는 경우
         if (this.$currentPreview.textContent.length < 1) {
-            return 
+            return
         }
         this.previousOperation = operation
         this.$previousPreview.textContent = `${this.$currentPreview.textContent} ${operation}`
@@ -34,32 +34,44 @@ class Calculator {
             this.$previousPreview.textContent.length < 1 ||
             this.previousOperation.length < 1
         ) {
-            return
+            return;
         }
-
-        let result = 0
-
+    
+        let result = 0;
+    
         switch (this.previousOperation) {
             case "+":
-                result = this.handlePlus()
-                break
+                result = this.handlePlus();
+                break;
             case "-":
-                result = this.handleMinus()
-                break
+                result = this.handleMinus();
+                break;
             case "*":
-                result = this.handleMultiply()
-                break
+                result = this.handleMultiply();
+                break;
             case "÷":
-                result = this.handleDivide()
-                break
+                result = this.handleDivide();
+                break;
             default:
-                break
+                break;
         }
-        this.$currentPreview.textContent = result.toString()
-        this.$previousPreview.textContent = ""
-        this.currentOperation = ""
+    
+        const currentExpression = `${this.$previousPreview.textContent} ${this.previousOperation} ${this.$currentPreview.textContent}`;
+        this.$currentPreview.textContent = result.toString();
+        this.$previousPreview.textContent = "";
+    
+        // 전체 계산식 저장
+        this.addHistory(`${currentExpression} = ${result}`);
+        this.previousOperation = ""; // 초기화
     }
-
+    
+    addHistory(entry) {
+        const historyList = document.querySelector('[data-history-list]');
+        const newEntry = document.createElement('li');
+        newEntry.textContent = entry;
+        historyList.appendChild(newEntry);
+    }
+    
     handlePlus() {
         return (
             Number(this.$previousPreview.textContent.split(" ")[0])
@@ -133,7 +145,7 @@ $numbers.forEach(($number) => {
 
 $operations.forEach(($operation) => {
     $operation.addEventListener("click", (e) => {
-       switch ($operation) {
+        switch ($operation) {
             case $plus:
                 cal.onPressOperation("+")
                 break;
@@ -151,9 +163,37 @@ $operations.forEach(($operation) => {
                 break;
             default:
                 break;
-       }
+        }
     })
 })
+document.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    // 숫자 입력 처리
+    if (!isNaN(key) || key === '.') {
+        cal.onPressNumber(key);
+    }
+
+    // 연산자 입력 처리
+    if (key === '+' || key === '-' || key === '*' || key === '/') {
+        cal.onPressOperation(key === '/' ? '÷' : key); // 나누기 기호 변환
+    }
+
+    // '=' 입력 처리
+    if (key === 'Enter') {
+        cal.onEqual();
+    }
+
+    // 'Escape' 입력 처리 (초기화)
+    if (key === 'Escape') {
+        cal.onReset();
+    }
+
+    // 'Backspace' 입력 처리 (삭제)
+    if (key === 'Backspace') {
+        cal.onDelete();
+    }
+});
 
 $reset.addEventListener("click", (e) => cal.onReset())
 $delete.addEventListener("click", (e) => cal.onDelete())
